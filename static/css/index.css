@@ -1,0 +1,51 @@
+/* Basic body and font setup */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 0;
+    color: #1f2937; /* Tailwind's gray-800 */
+  }
+  
+  /* Map container style */
+  #map {
+    width: 40%;
+    height: 80px;
+    border-radius: 0.5rem; /* Rounded corners */
+    box-shadow:
+      0 10px 15px -3px rgba(0,0,0,0.1),
+      0 4px 6px -4px rgba(54, 45, 45, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  /* Hover effect on map for subtle glow */
+  #map:hover {
+    box-shadow:
+      0 10px 25px -3px rgba(16, 185, 129, 0.4),
+      0 10px 10px -5px rgba(16, 185, 129, 0.3);
+  }
+  
+  /* Styling clickable event address links */
+  .event-address {
+    font-weight: 600;
+    cursor: pointer;
+    color: #16a34a; /* Tailwind's green-600 */
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+  
+  .event-address:hover {
+    color: #059669; /* Tailwind's green-700 */
+  }
+  
+  /* Dropdown fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  

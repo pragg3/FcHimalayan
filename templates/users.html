@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Profile</title>
+  <link rel="stylesheet" href="{% static 'css/users.css' %}">
+  <script src="https://kit.fontawesome.com/a2e0c6f5e1.js" crossorigin="anonymous"></script>
+  <style>
+    /* Quick flex layout for profile and stats side by side */
+    .profile-main {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .profile-box, .stats-box {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      flex: 1 1 400px;
+      min-width: 300px;
+    }
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .stats-table th, .stats-table td {
+      border: 1px solid #ccc;
+      padding: 0.6rem 0.8rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .stats-table th {
+      background-color: #e6f0ff;
+      font-weight: 600;
+      color: #005bb5;
+    }
+    .stats-table tbody tr:nth-child(even) {
+      background-color: #f9faff;
+    }
+    /* Responsive for smaller screens */
+    @media (max-width: 700px) {
+      .profile-main {
+        flex-direction: column;
+      }
+    }
+    /* Notification bell styles */
+    .notification-bell {
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      margin-left: 1rem;
+    }
+    .notification-count {
+      position: absolute;
+      top: -5px;
+      right: -8px;
+      background: #e03e2f;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    /* Dropdown menu */
+    .events-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 30px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 220px;
+      max-height: 250px;
+      overflow-y: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    .events-dropdown.active {
+      display: block;
+    }
+    .events-dropdown ul {
+      list-style: none;
+      padding: 0.5rem 1rem;
+      margin: 0;
+    }
+    .events-dropdown li {
+      padding: 0.4rem 0;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .events-dropdown li:last-child {
+      border-bottom: none;
+    }
+    .events-dropdown li:hover {
+      background-color: #f0f4ff;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-left">
+      <h1 class="logo">⚽ FC Himalayan</h1>
+    </div>
+    <div class="navbar-right">
+      <span class="welcome-text">Hi, {{ player.name }}!</span>
+      {% if event_data %}
+      <div class="notification-bell" id="notificationBell" tabindex="0" aria-haspopup="true" aria-expanded="false" role="button" aria-label="View upcoming events">
+        <svg xmlns="http://www.w3.org/2000/svg" class="bell-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="24" height="24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-5-5.917V5a2 2 0 10-4 0v.083A6.002 6.002 0 004 11v3.159c0 .538-.214 1.055-.595 1.436L2 17h5m5 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
+        {% with upcoming_events_count=event_data|length %}
+          {% if upcoming_events_count > 0 %}
+            <span class="notification-count">{{ upcoming_events_count }}</span>
+          {% endif %}
+        {% endwith %}
+
+        <div class="events-dropdown" id="eventsDropdown" role="menu" aria-label="Upcoming events list">
+          <ul>
+            {% for data in event_data %}
+              <li role="menuitem">{{ data.event.event_name }}</li>
+            {% empty %}
+              <li>No upcoming events.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% else %}
+        <div class="notification">
+          <i class="fas fa-bell"></i>
+        </div>
+      {% endif %}
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="profile-container">
+    <div class="profile-main">
+      <section class="profile-box">
+        <h2>Player's Information</h2>
+        {% if player.image %}
+          <img src="{{ player.image.url }}" alt="Player Image" class="profile-img">
+        {% else %}
+          <p>No profile image</p>
+        {% endif %}
+
+        <div class="user-info">
+          <p><strong>Name:</strong> {{ player.name }} {{ player.surname }}</p>
+          <p><strong>Age:</strong> {{ player.age }}</p>
+          <p><strong>Sex:</strong> {{ player.sex }}</p>
+          <p><strong>Position:</strong> {{ player.position }}</p>
+          <p><strong>Jersey Number:</strong> {{ player.jersey_number }}</p>
+          <p><strong>Country:</strong> {{ player.country }}</p>
+          <p><strong>Nationality:</strong> {{ player.nationality }}</p>
+          <p><strong>Address:</strong> {{ player.address }}</p>
+          <p><strong>Contacts:</strong> {{ player.contacts }}</p>
+          <p><strong>Email:</strong> {{ player.email }}</p>
+          <p class="admin-contact">Want to update your info? Please contact the admin.</p>
+        </div>
+      </section>
+
+      <section class="stats-box">
+        <h2>Recent Match Performance</h2>
+        {% if match_stats %}
+          <table class="stats-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Opponent</th>
+                <th>Goals</th>
+                <th>Assists</th>
+                <th>Yellow Cards</th>
+                <th>Red Cards</th>
+                <th>Minutes Played</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for match in match_stats %}
+                <tr>
+                  <td>{{ match.match_date|date:"M d, Y" }}</td>
+                  <td>{{ match.opponent_team }}</td>
+                  <td>{{ match.goals }}</td>
+                  <td>{{ match.assists }}</td>
+                  <td>{{ match.yellow_cards }}</td>
+                  <td>{{ match.red_cards }}</td>
+                  <td>{{ match.minutes_played }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>No match performance data available.</p>
+        {% endif %}
+      </section>
+    </div>
+
+    <section class="events-box">
+      <h2>Upcoming Events in {{ player.country }}</h2>
+      {% if event_data %}
+        {% for data in event_data %}
+          <div class="event-card">
+            <h3>{{ data.event.event_name }}</h3>
+            <p><strong>Date:</strong> {{ data.event.date|date:"D, M d, Y H:i" }}</p>
+            <p><strong>Location:</strong> {{ data.event.address }}</p>
+
+            <p><strong>Going:</strong> {{ data.going_count }}</p>
+            <p><strong>Not Going:</strong> {{ data.not_going_count }}</p>
+
+            <p><strong>People Going:</strong>
+              {% if data.going_users %}
+                <ul>
+                  {% for name in data.going_users %}
+                    <li>{{ name }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                None yet.
+              {% endif %}
+            </p>
+
+            <form method="post" action="{% url 'rsvp_event' data.event.uuid %}">
+                {% csrf_token %}
+                <button type="submit" name="status" value="Going" class="rsvp-btn going-btn"
+                  {% if data.user_rsvp and data.user_rsvp.status == 'Going' %} disabled {% endif %}>
+                  ✅ Going
+                </button>
+                <button type="submit" name="status" value="Not Going" class="rsvp-btn not-going-btn"
+                  {% if data.user_rsvp and data.user_rsvp.status == 'Not Going' %} disabled {% endif %}>
+                  ❌ Not Going
+                </button>
+              </form>
+              
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No upcoming events for your country.</p>
+      {% endif %}
+    </section>
+  </main>
+
+  <script>
+    // Toggle dropdown on bell click
+    document.addEventListener('DOMContentLoaded', function () {
+      const bell = document.getElementById('notificationBell');
+      const dropdown = document.getElementById('eventsDropdown');
+
+      if (bell && dropdown) {
+        bell.addEventListener('click', function(event) {
+          event.stopPropagation();
+          const expanded = bell.getAttribute('aria-expanded') === 'true';
+          if (expanded) {
+            dropdown.classList.remove('active');
+            bell.setAttribute('aria-expanded', 'false');
+          } else {
+            dropdown.classList.add('active');
+            bell.setAttribute('aria-expanded', 'true');
+          }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function () {
+          dropdown.classList.remove('active');
+          bell.setAttribute('aria-expanded', 'false');
+        });
+
+        // Close dropdown on Escape key
+        document.addEventListener('keydown', function(e) {
+          if(e.key === "Escape") {
+            dropdown.classList.remove('active');
+            bell.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

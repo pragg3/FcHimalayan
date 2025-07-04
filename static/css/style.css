@@ -1,0 +1,80 @@
+/* styles.css */
+
+/* General Page Styling */
+body {
+    background-image: url('https://www.transparenttextures.com/patterns/grass.png');
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1a1a1a;
+    animation: fadeInBody 1s ease-in;
+  }
+  
+  /* Header Styling */
+  header {
+    background: linear-gradient(to right, #004225, #007A33);
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    animation: slideDown 0.5s ease-out;
+  }
+  
+  header img {
+    animation: popIn 0.4s ease-in-out;
+  }
+  
+  /* Sidebar Styling */
+  aside {
+    background: #f0f4f0;
+    border-right: 2px solid #cce3dd;
+    animation: slideInLeft 0.5s ease-out;
+  }
+  
+  aside button,
+  aside a {
+    display: block;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  aside button:hover,
+  aside a:hover {
+    color: #004d26;
+    transform: translateX(6px);
+  }
+  
+  aside div > div {
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  /* Main Content */
+  main h1 {
+    color: #004225;
+    animation: fadeInMain 1s ease-in;
+  }
+  
+  /* Animations */
+  @keyframes fadeInBody {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeInMain {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideDown {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes slideInLeft {
+    from { transform: translateX(-40px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  

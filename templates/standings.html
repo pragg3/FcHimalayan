@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Standings</title>
+  <link rel="stylesheet" href="{% static 'css/standings.css' %}" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Navbar -->
+  <header class="flex items-center justify-between p-4 bg-green-800 shadow">
+    <div class="flex items-center space-x-4">
+        <img src="{% static 'images/logo.png' %}" alt="Club Logo" class="h-10 w-10" />
+      <span class="text-xl font-bold text-white">Fc Himalayan</span>
+    </div>
+    <nav>
+      <ul class="flex items-center space-x-6 text-white font-semibold">
+        <li><a href="{% url 'index' %}" class="hover:text-green-300">Home</a></li>
+        <li><a href="{% url 'login' %}" class="hover:text-green-300">Login</a></li>
+        <li><a href="{% url 'player_registration' %}" class="hover:text-green-300">Register</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="max-w-5xl mx-auto py-10 px-4">
+    <h1 class="text-3xl font-bold text-center text-green-800 mb-8">Standings</h1>
+
+    <!-- Dropdown -->
+    <form method="get" class="text-center mb-8">
+      <label for="event" class="text-lg font-medium text-gray-700 mr-2">Select Event:</label>
+      <select name="event" id="event" class="px-4 py-2 border rounded" onchange="this.form.submit()">
+        <option value="">-- Choose an event --</option>
+        {% for event in events %}
+          <option value="{{ event.uuid }}" {% if selected_event and selected_event.id == event.uuid %}selected{% endif %}>
+            {{ event.event_name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+
+    <!-- Group Phase Standings -->
+    {% if selected_event %}
+      {% if grouped_standings %}
+        {% for group, standings in grouped_standings.items %}
+          <h2 class="text-2xl text-green-700 font-semibold mt-6 mb-2">{{ group }}</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full bg-white shadow rounded border mb-6">
+              <thead class="bg-green-100 text-green-900">
+                <tr>
+                  <th class="py-2 px-4 border">Team</th>
+                  <th class="py-2 px-4 border">P</th>
+                  <th class="py-2 px-4 border">W</th>
+                  <th class="py-2 px-4 border">D</th>
+                  <th class="py-2 px-4 border">L</th>
+                  <th class="py-2 px-4 border">GF</th>
+                  <th class="py-2 px-4 border">GA</th>
+                  <th class="py-2 px-4 border">GD</th>
+                  <th class="py-2 px-4 border">Pts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for standing in standings %}
+                  <tr class="text-center hover:bg-green-50">
+                    <td class="py-2 px-4 border font-semibold">{{ standing.team.name }}</td>
+                    <td class="py-2 px-4 border">{{ standing.played }}</td>
+                    <td class="py-2 px-4 border">{{ standing.won }}</td>
+                    <td class="py-2 px-4 border">{{ standing.drawn }}</td>
+                    <td class="py-2 px-4 border">{{ standing.lost }}</td>
+                    <td class="py-2 px-4 border">{{ standing.goals_for }}</td>
+                    <td class="py-2 px-4 border">{{ standing.goals_against }}</td>
+                    <td class="py-2 px-4 border">{{ standing.goal_difference }}</td>
+                    <td class="py-2 px-4 border font-bold text-green-700">{{ standing.points }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-center text-gray-500 italic">No standings available for this event yet.</p>
+      {% endif %}
+    {% endif %}
+
+    <!-- Toggle button for Knockout phase -->
+    {% if selected_event %}
+    <div class="text-center my-6">
+      <button id="toggle-knockout" class="inline-flex items-center text-green-700 font-semibold hover:text-green-900 focus:outline-none">
+        <span>Show Knockout Phase</span>
+        <svg id="arrow-icon" class="w-6 h-6 ml-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+             xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Knockout phase container -->
+    <div id="knockout-phase" class="max-w-5xl mx-auto px-4 py-6 bg-white shadow rounded border overflow-auto max-h-0 overflow-hidden transition-max-height duration-500 ease-in-out">
+      <h2 class="text-2xl font-bold text-green-800 mb-8 text-center">Knockout Phase</h2>
+
+      <div class="flex justify-center items-start space-x-8">
+
+        <!-- Quarterfinals -->
+        <div class="flex flex-col space-y-6">
+          <h3 class="text-center font-semibold mb-4">Quarterfinals</h3>
+          {% for match in knockout_matches.quarterfinals %}
+          <div class="match-box relative border rounded bg-green-50 p-3 w-48">
+            <p class="font-semibold">{{ match.team1.name }} vs {{ match.team2.name }}</p>
+            <p class="text-sm">Score: {{ match.score1 }} - {{ match.score2 }}</p>
+            {% if not forloop.last %}
+              <div class="connector-horizontal absolute right-0 top-1/2 transform -translate-y-1/2 w-6 h-0.5"></div>
+              <div class="connector-vertical absolute right-6 top-0 h-full w-0.5"></div>
+            {% endif %}
+          </div>
+          {% empty %}
+            <p class="text-gray-500 italic">No quarterfinal matches yet.</p>
+          {% endfor %}
+        </div>
+
+        <!-- Semifinals -->
+        <div class="flex flex-col space-y-14">
+          <h3 class="text-center font-semibold mb-4">Semifinals</h3>
+          {% for match in knockout_matches.semifinals %}
+          <div class="match-box relative border rounded bg-green-50 p-3 w-48">
+            <p class="font-semibold">{{ match.team1.name }} vs {{ match.team2.name }}</p>
+            <p class="text-sm">Score: {{ match.score1 }} - {{ match.score2 }}</p>
+            {% if not forloop.last %}
+              <div class="connector-horizontal absolute right-0 top-1/2 transform -translate-y-1/2 w-6 h-0.5"></div>
+              <div class="connector-vertical absolute right-6 top-0 h-full w-0.5"></div>
+            {% endif %}
+          </div>
+          {% empty %}
+            <p class="text-gray-500 italic">No semifinal matches yet.</p>
+          {% endfor %}
+        </div>
+
+        <!-- Final -->
+        <div class="flex flex-col space-y-36">
+          <h3 class="text-center font-semibold mb-4">Final</h3>
+          {% if knockout_matches.final %}
+          <div class="match-box relative border rounded bg-green-50 p-3 w-48">
+            <p class="font-semibold">{{ knockout_matches.final.team1.name }} vs {{ knockout_matches.final.team2.name }}</p>
+            <p class="text-sm">Score: {{ knockout_matches.final.score1 }} - {{ knockout_matches.final.score2 }}</p>
+          </div>
+          {% else %}
+            <p class="text-gray-500 italic">No final match yet.</p>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('toggle-knockout');
+    const knockoutDiv = document.getElementById('knockout-phase');
+    const arrowIcon = document.getElementById('arrow-icon');
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        if (knockoutDiv.style.maxHeight && knockoutDiv.style.maxHeight !== "0px") {
+          knockoutDiv.style.maxHeight = "0px";
+          arrowIcon.style.transform = 'rotate(0deg)';
+          toggleBtn.querySelector('span').textContent = 'Show Knockout Phase';
+        } else {
+          knockoutDiv.style.maxHeight = knockoutDiv.scrollHeight + "px";
+          arrowIcon.style.transform = 'rotate(180deg)';
+          toggleBtn.querySelector('span').textContent = 'Hide Knockout Phase';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FC Himalayan News</title>
+  <link rel="stylesheet" href="{% static 'css/news.css' %}">
+  <script src="https://kit.fontawesome.com/a2e0c6f5e1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-left">
+      <h1 class="logo">📰 FC Himalayan News</h1>
+    </div>
+    <div class="navbar-right">
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Home</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="news-container">
+    <h2 class="section-title">Latest Headlines</h2>
+
+    <input type="text" id="searchInput" placeholder="Search headlines..." class="search-bar">
+
+    <div id="newsList" class="news-grid">
+      {% for news in news_list %}
+        <div class="news-card">
+          {% if news.image %}
+            <img src="{{ news.image.url }}" class="news-img" alt="News Image">
+          {% endif %}
+          <h3 class="headline">{{ news.headline }}</h3>
+          {% if news.tags %}
+            <div class="tags">
+              {% for tag in news.tags.all %}
+                <span class="tag">{{ tag.name }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+          <p class="content">{{ news.content|truncatewords:30 }}</p>
+          <button class="read-more-btn" onclick="toggleContent(this)">Read More</button>
+          <div class="full-content hidden">{{ news.content }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <script>
+    function toggleContent(button) {
+      const content = button.nextElementSibling;
+      const isHidden = content.classList.contains('hidden');
+      content.classList.toggle('hidden');
+      button.textContent = isHidden ? 'Read Less' : 'Read More';
+    }
+
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+      const filter = this.value.toLowerCase();
+      const cards = document.querySelectorAll('.news-card');
+
+      cards.forEach(card => {
+        const text = card.querySelector('.headline').textContent.toLowerCase();
+        card.style.display = text.includes(filter) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* Lightbox styles */
+#lightbox-overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  #lightbox-overlay.flex {
+    display: flex;
+  }
+  #lightbox-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  #lightbox-img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  }
+  #lightbox-caption {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  #lightbox-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    background: rgba(0,0,0,0.5);
+    border-radius: 9999px;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+  }
+  #download-btn {
+    margin-top: 0.75rem;
+    display: inline-block;
+    background-color: #22c55e; /* green-500 */
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  #download-btn:hover {
+    background-color: #16a34a; /* green-700 */
+  }
+  

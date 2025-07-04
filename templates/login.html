@@ -1,0 +1,67 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Club Portal</title>
+  <link href="{% static 'css/login.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="login-container fadeInUp">
+    <h2 class="title">Login to Your Account</h2>
+
+    <form method="post" action="{% url 'login' %}" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+      <div class="error-msg">
+        {{ form.non_field_errors }}
+      </div>
+      {% endif %}
+
+      <div class="input-group">
+        <label for="id_username">Email</label>
+        <input
+          type="email"
+          name="username"
+          id="id_username"
+          value="{{ form.username.value|default_if_none:'' }}"
+          required
+          autocomplete="email"
+          placeholder="you@example.com"
+        />
+        {% if form.username.errors %}
+        <p class="field-error">{{ form.username.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div class="input-group">
+        <label for="id_password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="id_password"
+          required
+          autocomplete="current-password"
+          placeholder="••••••••"
+        />
+        {% if form.password.errors %}
+        <p class="field-error">{{ form.password.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn-submit">Login</button>
+    </form>
+
+    <p class="register-text">
+      Don't have an account?
+      <a href="{% url 'player_registration' %}" class="register-link">Register here</a>
+    </p>
+  </div>
+</body>
+
+</html>

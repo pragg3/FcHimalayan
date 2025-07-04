@@ -1,0 +1,114 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    color: #1f2937;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  h1, h2, h3, h4 {
+    color: #047857;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  
+  .player-card {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.25s ease-in-out;
+  }
+  
+  .player-card:hover {
+    box-shadow: 0 8px 15px rgba(16, 185, 129, 0.3);
+  }
+  
+  .player-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  
+  .performance-list {
+    overflow-x: auto;
+    margin-top: 1rem;
+  }
+  
+  .performance-list table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 700px;
+  }
+  
+  .performance-list th,
+  .performance-list td {
+    border: 1px solid #d1d5db;
+    padding: 6px 8px;
+    text-align: left;
+  }
+  
+  .performance-list tbody tr:nth-child(even) {
+    background-color: #f3f4f6;
+  }
+  
+  .performance-list tbody tr:hover {
+    background-color: #d1fae5;
+  }
+  
+  /* Navbar Wrapper */
+.navbar {
+    background-color: #047857; /* Tailwind's emerald-700 */
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Inner container for max width */
+  .navbar .max-w-6xl {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Logo and Brand Text */
+  .navbar .flex.items-center span {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .navbar img {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 0.25rem;
+  }
+  
+  /* Navigation Links */
+  .navbar nav a {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 1rem;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .navbar nav a:hover {
+    opacity: 0.85;
+    text-decoration: underline;
+  }
+  
+  .navbar nav a.underline {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  

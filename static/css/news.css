@@ -1,0 +1,135 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f7fafc;
+    margin: 0;
+  }
+  
+  .navbar {
+    background-color: #1a202c;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+  
+  .logout-btn {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .news-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #2d3748;
+    margin-bottom: 1rem;
+  }
+  
+  .search-bar {
+    display: block;
+    margin: 0 auto 2rem auto;
+    padding: 0.7rem 1rem;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e0;
+  }
+  
+  .news-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .news-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    padding: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+  
+  .news-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.7rem;
+  }
+  
+  .headline {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a202c;
+  }
+  
+  .content {
+    color: #4a5568;
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+  }
+  
+  .read-more-btn {
+    margin-top: 0.8rem;
+    background-color: #2b6cb0;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .read-more-btn:hover {
+    background-color: #2c5282;
+  }
+  
+  .full-content {
+    margin-top: 0.8rem;
+    color: #2d3748;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-height: 500px;
+    overflow: auto;
+    transition: all 0.3s ease;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .tags {
+    margin-top: 0.4rem;
+  }
+  
+  .tag {
+    background-color: #edf2f7;
+    color: #2c5282;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 4px;
+    font-size: 0.75rem;
+    display: inline-block;
+  }
+  

@@ -1,0 +1,148 @@
+/* players.css */
+
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9fafb;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+td {
+    background-color: #ffffff;
+}
+
+/* Player image styling */
+.player-image {
+    width: 50px; /* Adjust the width of the images */
+    height: 50px; /* Adjust the height of the images */
+    object-fit: cover; /* Ensures the image doesn't get stretched or distorted */
+    border-radius: 50%; /* Makes the image circular */
+}
+
+/* Add some hover effects for rows */
+tr:hover {
+    background-color: #f0f0f0;
+}
+
+a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #45a049;
+    text-decoration: underline;
+}
+
+/* players.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  .profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+  
+  .profile-box, .stats-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    flex: 1 1 400px;
+  }
+  
+  .profile-box h2, .stats-box h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #0073e6;
+    border-bottom: 2px solid #0073e6;
+    padding-bottom: 0.3rem;
+  }
+  
+  .profile-img {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: block;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  
+  .profile-box p {
+    margin: 0.4rem 0;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  .stats-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .stats-table th, .stats-table td {
+    border: 1px solid #ccc;
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .stats-table th {
+    background-color: #e6f0ff;
+    font-weight: 600;
+    color: #005bb5;
+  }
+  
+  .stats-table tbody tr:nth-child(even) {
+    background-color: #f9faff;
+  }
+  
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .profile-container {
+      flex-direction: column;
+    }
+    .profile-box, .stats-box {
+      flex: 1 1 100%;
+    }
+  }
+  

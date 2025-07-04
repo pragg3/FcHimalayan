@@ -1,0 +1,76 @@
+/* Base layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Header */
+  header {
+    background-color: #065f46;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  /* Main grid */
+  main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  /* Card style */
+  .card {
+    background-color: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,128,0,0.15);
+  }
+  
+  .card img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    object-position: center;
+    border-bottom: 1px solid #eee;
+    background-color: #f9f9f9;
+  }
+  
+  
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #065f46;
+  }
+  
+  .card-term {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+  }
+  
+  .card-description {
+    font-size: 0.95rem;
+    color: #374151;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+  

@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>All Players</title>
+    <link rel="stylesheet" href="{% static 'css/players.css' %}" />
+    <div class="navbar">
+        <div class="max-w-6xl">
+          <div class="flex items-center">
+            <span>FC Himalayan</span>
+          </div>
+          <nav>
+            <a href="/">Home</a>
+            <a href="{% url 'player_list' %}">Players</a>
+            <a href="{% url 'login' %}" class="underline">Login</a>
+          </nav>
+        </div>
+      </div>
+      
+    
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl font-bold text-center mb-6">Registered Players</h1>
+        <table class="table-auto w-full bg-white shadow-md rounded-lg">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Image</th>
+                    <th class="py-2 px-4 border-b">Name</th>
+                    <th class="py-2 px-4 border-b">Surname</th>
+                    <th class="py-2 px-4 border-b">Age</th>
+                    <th class="py-2 px-4 border-b">Position</th>
+                    <th class="py-2 px-4 border-b">Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                <tr>
+                    <td class="py-4 px-4 text-center">
+                        {% if player.image %}
+                            <a href="{% url 'player_profile' player.id %}">
+                                <img src="{{ player.image.url }}" alt="Player Image" class="player-image" style="max-width: 80px; cursor: pointer;" />
+                            </a>
+                        {% else %}
+                            <span>No Image</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-4 text-center">{{ player.name }}</td>
+                    <td class="py-4 px-4 text-center">{{ player.surname }}</td>
+                    <td class="py-4 px-4 text-center">{{ player.age }}</td>
+                    <td class="py-4 px-4 text-center">{{ player.position }}</td>
+                    <td class="py-4 px-4 text-center">{{ player.country }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

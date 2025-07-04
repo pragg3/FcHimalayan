@@ -1,0 +1,221 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f8fafc;
+    color: #1f2937;
+  }
+  
+  .navbar {
+    background-color: #064e3b;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-left .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .welcome-text {
+    font-size: 1rem;
+  }
+  
+  .logout-btn {
+    background-color: #ef4444;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .logout-btn:hover {
+    background-color: #dc2626;
+  }
+  
+  .notification {
+    position: relative;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .notification .active {
+    color: #facc15;
+  }
+  
+  .notification .badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+  }
+  
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 30px;
+  }
+  
+  .profile-box, .events-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.06);
+  }
+  
+  .profile-img {
+    max-width: 180px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .user-info p {
+    margin: 6px 0;
+    line-height: 1.5;
+  }
+  
+  .admin-contact {
+    color: #f97316;
+    font-style: italic;
+    margin-top: 12px;
+  }
+  
+  .events-box h2 {
+    margin-bottom: 10px;
+  }
+  
+  .event-card {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-left: 5px solid #10b981;
+  }
+  
+  .event-card h3 {
+    margin-top: 0;
+  }
+  
+  .rsvp-btn {
+    background-color: #10b981;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .rsvp-btn:hover {
+    background-color: #059669;
+  }
+  .notification-bell {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    color: #555;
+  }
+  
+  .bell-icon {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .notification-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    font-weight: bold;
+  }
+  
+  .event-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    background: #fafafa;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.05);
+  }
+  
+  .event-card h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .event-card ul {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    color: #444;
+    margin-top: 0.25rem;
+  }
+  
+  .rsvp-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rsvp-btn:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .stats-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+  
+  .stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .stats-table th, .stats-table td {
+    border: 1px solid #ccc;
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .stats-table th {
+    background-color: #e6f0ff;
+    font-weight: 600;
+    color: #005bb5;
+  }
+  
+  .stats-table tbody tr:nth-child(even) {
+    background-color: #f9faff;
+  }
+  

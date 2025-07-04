@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Registration</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+<body class="font-sans bg-gray-100">
+    <div class="container">
+        <h1 class="text-4xl font-bold text-center mb-6">Player Registration</h1>
+
+        <!-- Display Errors -->
+        {% if form.errors %}
+            <div class="error-message text-red-500 mb-4">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        <li><strong>{{ field }}:</strong>
+                            <ul>
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto bg-white p-8 rounded shadow">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="image" class="block text-lg font-semibold">Player Image</label>
+                <input type="file" name="image" id="image" accept="image/*" class="w-full mt-2 p-2 border rounded">
+            </div>
+            
+            <div class="form-group">
+                <label for="name" class="block text-lg font-semibold">Name</label>
+                <input type="text" name="name" id="name" required class="w-full mt-2 p-2 border rounded" placeholder="First Name">
+            </div>
+
+            <div class="form-group">
+                <label for="surname" class="block text-lg font-semibold">Surname</label>
+                <input type="text" name="surname" id="surname" required class="w-full mt-2 p-2 border rounded" placeholder="Last Name">
+            </div>
+
+            <div class="form-group">
+                <label for="age" class="block text-lg font-semibold">Age</label>
+                <input type="number" name="age" id="age" required min="13" title="Minimum age required is 13" class="w-full mt-2 p-2 border rounded" placeholder="Minimum 13 Years Old">
+            </div>
+
+            <div class="form-group">
+                <label for="sex" class="block text-lg font-semibold">Sex</label>
+                <select name="sex" id="sex" class="w-full mt-2 p-2 border rounded">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="position" class="block text-lg font-semibold">Player Position</label>
+                <select name="position" id="position" required class="w-full mt-2 p-2 border rounded">
+                    <option value="ST">Striker (ST)</option>
+                    <option value="CM">Central Midfield (CM)</option>
+                    <option value="CDM">Central Defensive Midfield (CDM)</option>
+                    <option value="AMF">Attacking Midfield (AMF)</option>
+                    <option value="GK">Goalkeeper (GK)</option>
+                    <option value="LB">Left Back (LB)</option>
+                    <option value="RB">Right Back (RB)</option>
+                    <option value="CB">Center Back (CB)</option>
+                    <option value="RW">Right Wing (RW)</option>
+                    <option value="LW">Left Wing (LW)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="jersey_number" class="block text-lg font-semibold">Jersey Number</label>
+                <input type="number" name="jersey_number" id="jersey_number" required class="w-full mt-2 p-2 border rounded" placeholder="Jersey Number">
+            </div>
+
+            <div class="form-group">
+                <label for="country" class="block text-lg font-semibold">Country</label>
+                <select name="country" id="country" class="w-full mt-2 p-2 border rounded">
+                    <option value="Portugal">Portugal</option>
+                    <option value="Denmark">Denmark</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nationality" class="block text-lg font-semibold">Nationality</label>
+                <input type="text" name="nationality" id="nationality" required class="w-full mt-2 p-2 border rounded" placeholder="Nationality">
+            </div>
+
+            <div class="form-group">
+                <label for="address" class="block text-lg font-semibold">Address</label>
+                <textarea name="address" id="address" required class="w-full mt-2 p-2 border rounded" placeholder="Address"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="contacts" class="block text-lg font-semibold">Contacts</label>
+                <input type="text" name="contacts" id="contacts" required class="w-full mt-2 p-2 border rounded" placeholder="Contact Number">
+            </div>
+            <div class="form-group">
+                <label for="email" class="block text-lg font-semibold">Email</label>
+                <input type="email" name="email" id="email" required class="w-full mt-2 p-2 border rounded" placeholder="Email">
+            </div>
+            
+
+            <!-- Password and Confirm Password Fields -->
+            <div class="form-group">
+                <label for="password" class="block text-lg font-semibold">Password</label>
+                <input type="password" name="password" id="password" required class="w-full mt-2 p-2 border rounded" placeholder="Password">
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirm" class="block text-lg font-semibold">Confirm Password</label>
+                <input type="password" name="password_confirm" id="password_confirm" required class="w-full mt-2 p-2 border rounded" placeholder="Confirm Password">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="w-full py-2 bg-green-600 text-white font-semibold rounded mt-6 hover:bg-green-700">Register Player</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

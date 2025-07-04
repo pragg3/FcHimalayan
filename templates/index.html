@@ -1,0 +1,343 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Football Club Team Page</title>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Leaflet (no integrity attributes) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    #map-denmark, #map-portugal {
+      width: 100%;
+      height: 300px;
+      border-radius: 0.5rem;
+      box-shadow:
+        0 10px 15px -3px rgba(0,0,0,0.1),
+        0 4px 6px -4px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    #map-denmark:hover, #map-portugal:hover {
+      box-shadow:
+        0 10px 25px -3px rgba(64, 69, 142, 0.4),
+        0 10px 10px -5px rgba(197, 100, 119, 0.4);
+    }
+
+    .event-address {
+      font-weight: 600;
+      color: #16a34a;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+    }
+
+    .event-address:hover {
+      color: red;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease forwards;
+    }
+  </style>
+  
+
+  <script>
+    function toggleDropdown(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('hidden');
+      el.classList.toggle('animate-fade-in');
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-gray-50 font-sans">
+
+  <!-- Header -->
+  <header class="flex items-center justify-between p-4 bg-green-800 shadow">
+    <div class="flex items-center space-x-4">
+        <img src="{% static 'images/logo.png' %}" alt="Club Logo" class="h-10 w-10" />
+                <span class="text-xl font-bold text-white">Fc Himalayan</span>
+    </div>
+    <div class="space-x-4">
+      <a href="{% url 'login' %}">
+        <button class="bg-white text-green-800 font-semibold px-4 py-2 rounded hover:bg-green-100">Login</button>
+      </a>
+      <a href="{% url 'player_registration' %}">
+        <button class="bg-white text-green-800 font-semibold px-4 py-2 rounded hover:bg-green-100">Register</button>
+      </a>
+    </div>
+  </header>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="w-80 min-h-screen bg-white shadow p-6 space-y-6">
+        <form action="{% url 'search_results' %}" method="get">
+            <input type="text" name="q" placeholder="Search players, News..." class="w-full px-4 py-2 border border-gray-300 rounded text-black" required />
+            <button type="submit" class="hidden">Search</button>
+          </form>
+          
+      <div>
+        <button class="text-left w-full font-semibold text-green-900" onclick="toggleDropdown('club-history')">About Himalayan Fc</button>
+        <div id="club-history" class="ml-4 mt-3 hidden space-y-1">
+            <a href="{% url 'trophies' %}" class="block text-gray-700 hover:text-green-700">Trophies</a>
+            <a href="{% url 'presidents' %}" class="block text-gray-700 hover:text-green-700">Members</a>
+        </div>
+      </div>
+
+      <div>
+        
+      </div>
+
+      <div>
+        <button class="text-left w-full font-semibold text-green-900" onclick="toggleDropdown('football')">Himalayan Football Teams</button>
+        <div id="football" class="ml-4 mt-3 hidden space-y-1">
+          <a href="{% url 'player_list' %}?country=Denmark" class="block text-gray-700 hover:text-green-700">Himalayan Fc Denmark 🇩🇰</a>
+          <a href="{% url 'player_list' %}?country=Portugal" class="block text-gray-700 hover:text-green-700">Himalayan Fc Portugal 🇵🇹</a>
+        </div>
+      </div>
+
+      <a href="{% url 'news_list' %}" class="block font-semibold text-green-900 hover:text-green-700">News</a>
+      <a href="{% url 'contact' %}" class="block font-semibold text-green-900 hover:text-green-700">Contact</a>
+      <a href="{% url 'player_list' %}" class="block font-semibold text-green-900 hover:text-green-700">Players</a>
+      <div>
+        <button class="text-left w-full font-semibold text-green-900" onclick="toggleDropdown('gallery-submenu')">
+          Gallery
+        </button>
+        <div id="gallery-submenu" class="ml-4 mt-2 hidden space-y-1">
+          <a href="{% url 'gallery' %}?country=Denmark" class="block text-gray-700 hover:text-green-700">
+            Denmark 🇩🇰
+          </a>
+          <a href="{% url 'gallery' %}?country=Portugal" class="block text-gray-700 hover:text-green-700">
+            Portugal 🇵🇹
+          </a>
+        </div>
+      </div>
+      <a href="{% url 'standings' %}" class="block font-semibold text-green-900 hover:text-green-700">Standings</a>
+
+      
+      <div class="mt-6 flex space-x-6">
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/himalayan.fc/" target="_blank" aria-label="Instagram">
+          <svg class="w-6 h-6" fill="red" viewBox="0 0 24 24">
+            <path d="M7.75 2A5.75 5.75 0 0 0 2 7.75v8.5A5.75 5.75 0 0 0 7.75 22h8.5A5.75 5.75 0 0 0 22 16.25v-8.5A5.75 5.75 0 0 0 16.25 2h-8.5zM4.5 7.75A3.25 3.25 0 0 1 7.75 4.5h8.5A3.25 3.25 0 0 1 19.5 7.75v8.5a3.25 3.25 0 0 1-3.25 3.25h-8.5A3.25 3.25 0 0 1 4.5 16.25v-8.5zM12 7.25a4.75 4.75 0 1 0 0 9.5a4.75 4.75 0 0 0 0-9.5zM12 9a3 3 0 1 1 0 6a3 3 0 0 1 0-6zm5.25-.88a1.13 1.13 0 1 1-2.25 0a1.13 1.13 0 0 1 2.25 0z"/>
+          </svg>
+        </a>
+      
+        <!-- TikTok -->
+        <a href="https://www.tiktok.com/@himalayan.fc9" target="_blank" aria-label="TikTok">
+          <svg class="w-6 h-6" fill="black" viewBox="0 0 24 24">
+            <path d="M12.68 2c1.2 0 2.3.9 2.48 2.1c.2 1.23 1.12 2.13 2.35 2.24c.37.03.72.05 1.05.06v2.6a7.06 7.06 0 0 1-3.02-.73v5.42a5.51 5.51 0 1 1-5.52-5.5c.22 0 .43.01.64.03v2.64a2.87 2.87 0 1 0 2.88 2.88V2h-.86z"/>
+          </svg>
+        </a>
+      
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/profile.php?id=100011428112948" target="_blank" aria-label="Facebook">
+          <svg class="w-6 h-6" fill="#1877F2" viewBox="0 0 24 24">
+            <path d="M13.5 3h2.75V0h-3.5C10.46 0 9 1.46 9 3.25v2.5H6v3h3v12h3.5V8.75h2.75l.25-3H12.5v-1c0-.41.34-.75.75-.75z"/>
+          </svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-6">
+      <h1 class="text-2xl font-bold mb-6">Welcome to Himalayan Fc, Find the Upcoming Events</h1>
+
+      <!-- Denmark Event -->
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">In Denmark</h2>
+        {% if denmark %}
+          <p><strong>{{ denmark.event_name }}</strong></p>
+          <p>Date & Time: {{ denmark.date|date:"D, M d, Y H:i" }}</p>
+          <a href="#" class="event-address" data-address="{{ denmark.address }}" data-map="map-denmark">Show Map: {{ denmark.address }}</a>
+          <div id="map-denmark"></div>
+        {% else %}
+          <p>No Denmark events yet.</p>
+        {% endif %}
+      </section>
+
+      <!-- Portugal Event -->
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">In Portugal</h2>
+        {% if portugal %}
+          <p><strong>{{ portugal.event_name }}</strong></p>
+          <p>Date & Time: {{ portugal.date|date:"D, M d, Y H:i" }}</p>
+          <a href="#" class="event-address" data-address="{{ portugal.address }}" data-map="map-portugal">Show Map: {{ portugal.address }}</a>
+          <div id="map-portugal"></div>
+        {% else %}
+          <p>No Portugal events yet.</p>
+        {% endif %}
+      </section>
+    </main>
+  </div>
+
+  <!-- Leaflet Maps Script -->
+  <script>
+    const maps = {};
+
+    function initLeafletMap(mapId, lat, lon) {
+      const map = L.map(mapId).setView([lat, lon], 6);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      const marker = L.marker([lat, lon]).addTo(map);
+      maps[mapId] = { map, marker };
+    }
+
+    function geocodeAndUpdateMap(address, mapId) {
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.length > 0) {
+            const { lat, lon } = data[0];
+            const { map, marker } = maps[mapId];
+            map.setView([lat, lon], 14);
+            marker.setLatLng([lat, lon]);
+          } else {
+            alert("Address not found.");
+          }
+        })
+        .catch(() => alert("Failed to fetch location."));
+    }
+
+    window.onload = function () {
+      if (document.getElementById('map-denmark')) {
+        initLeafletMap('map-denmark', 56.2639, 9.5018); // Denmark
+      }
+      if (document.getElementById('map-portugal')) {
+        initLeafletMap('map-portugal', 39.3999, -8.2245); // Portugal
+      }
+
+      document.querySelectorAll('.event-address').forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const address = this.getAttribute('data-address');
+          const mapId = this.getAttribute('data-map');
+          geocodeAndUpdateMap(address, mapId);
+        });
+      });
+    };
+  </script>
+  <footer class="bg-gray-900 text-white py-12 mt-20">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold text-green-400 mb-4">Support FC Himalayan 💚</h2>
+      <p class="text-gray-300 mb-6 text-lg">
+        We rely on your generous support to train athletes, host events, and grow dreams. Every contribution matters.
+      </p>
+  
+      <form id="donation-form" method="POST" class="mb-8">
+        {% csrf_token %}
+        <label for="donation-amount" class="block text-gray-300 mb-2 font-semibold">
+          Enter donation amount (EUR):
+        </label>
+        <input
+          id="donation-amount"
+          name="amount"
+          type="number"
+          min="1"
+          step="0.01"
+          placeholder="e.g. 10.00"
+          class="text-black px-4 py-2 rounded w-48 mx-auto block mb-4"
+          required
+        />
+        <button
+          id="donate-button"
+          type="button"
+          class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg transition"
+        >
+          💳 Donate Securely via Stripe
+        </button>
+      </form>
+  
+      <div id="qr-code-container" class="mb-6">
+        <!-- QR Code for Payment Link will appear here -->
+      </div>
+  
+      <p class="text-sm text-gray-400 max-w-xl mx-auto">
+        🔒 Your payment is processed securely by <strong>Stripe</strong>. We do <em>not</em> store your card or banking details. All transactions are encrypted and fully PCI compliant.
+      </p>
+  
+      <p class="text-xs text-gray-500 mt-4">
+        © 2025 FC Himalayan. All rights reserved.
+      </p>
+    </div>
+  
+    <!-- Stripe.js library -->
+    <script src="https://js.stripe.com/v3/"></script>
+  
+    <!-- CSRF cookie helper -->
+    <script>
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    </script>
+  
+    <!-- Stripe checkout handler -->
+    <script>
+      const stripe = Stripe("{{ STRIPE_PUBLISHABLE_KEY }}"); // Inject from Django context
+  
+      document.getElementById('donate-button').addEventListener('click', async () => {
+        const amountInput = document.getElementById('donation-amount');
+        const amount = parseFloat(amountInput.value);
+  
+        if (!amount || amount < 1) {
+          alert("Please enter a valid donation amount (minimum 1 EUR).");
+          return;
+        }
+  
+        // Amount in cents
+        const amountCents = Math.round(amount * 100);
+  
+        try {
+          const response = await fetch("{% url 'create_checkout_session' %}", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie('csrftoken'),  // use JS function to get CSRF token from cookie
+            },
+            body: JSON.stringify({ amount: amountCents }),
+          });
+  
+          const session = await response.json();
+  
+          if (session.error) {
+            alert(session.error);
+            return;
+          }
+  
+          // Redirect to Stripe Checkout
+          await stripe.redirectToCheckout({ sessionId: session.id });
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Failed to create checkout session.");
+        }
+      });
+    </script>
+  </footer>
+  
+  
+  
+</body>
+</html>
