@@ -250,7 +250,7 @@ def create_checkout_session(request):
     data = json.loads(request.body)
     try:
         session = stripe.checkout.Session.create(
-            payment_method_types=['card', 'mb_way', 'revolut_pay', 'mobilepay'],
+            payment_method_types=['card', 'multibanco', 'revolut_pay', 'mobilepay'],
             line_items=[{
                 'price_data': {
                     'currency': 'eur',
