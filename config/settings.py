@@ -157,4 +157,13 @@ STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
 DATABASES['default'] = dj_database_url.config(default='sqlite:///db.sqlite3')
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'himalayanfc2@gmail.com'
+EMAIL_HOST_PASSWORD = 'pdbpkzrrxwxollgr'
+DEFAULT_FROM_EMAIL = 'Club Portal <noreply@yourdomain.com>'
 

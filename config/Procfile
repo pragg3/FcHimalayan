@@ -1,1 +1,1 @@
-web: gunicorn HimClub.wsgi
+gunicorn HimClub.wsgi:application

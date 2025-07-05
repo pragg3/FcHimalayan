@@ -15,8 +15,10 @@
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-3">
         <img src="{% static 'images/logo.png' %}" alt="Club Logo" class="h-10 w-10" />
-        <span class="text-xl font-bold">FC Himalayan</span>
-      </div>
+        <a href="/">
+            <span class="text-xl font-bold text-white">Fc Himalayan</span>
+        </a>      
+    </div>
       <nav class="space-x-4">
         <a href="/" class="hover:underline">Home</a>
         <a href="{% url 'player_list' %}" class="hover:underline">Players</a>

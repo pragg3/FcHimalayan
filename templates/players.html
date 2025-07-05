@@ -2,60 +2,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>All Players</title>
-    <link rel="stylesheet" href="{% static 'css/players.css' %}" />
-    <div class="navbar">
-        <div class="max-w-6xl">
-          <div class="flex items-center">
-            <span>FC Himalayan</span>
-          </div>
-          <nav>
-            <a href="/">Home</a>
-            <a href="{% url 'player_list' %}">Players</a>
-            <a href="{% url 'login' %}" class="underline">Login</a>
-          </nav>
-        </div>
-      </div>
-      
-    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>All Players</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1 class="text-4xl font-bold text-center mb-6">Registered Players</h1>
-        <table class="table-auto w-full bg-white shadow-md rounded-lg">
-            <thead>
-                <tr>
-                    <th class="py-2 px-4 border-b">Image</th>
-                    <th class="py-2 px-4 border-b">Name</th>
-                    <th class="py-2 px-4 border-b">Surname</th>
-                    <th class="py-2 px-4 border-b">Age</th>
-                    <th class="py-2 px-4 border-b">Position</th>
-                    <th class="py-2 px-4 border-b">Country</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for player in players %}
-                <tr>
-                    <td class="py-4 px-4 text-center">
-                        {% if player.image %}
-                            <a href="{% url 'player_profile' player.id %}">
-                                <img src="{{ player.image.url }}" alt="Player Image" class="player-image" style="max-width: 80px; cursor: pointer;" />
-                            </a>
-                        {% else %}
-                            <span>No Image</span>
-                        {% endif %}
-                    </td>
-                    <td class="py-4 px-4 text-center">{{ player.name }}</td>
-                    <td class="py-4 px-4 text-center">{{ player.surname }}</td>
-                    <td class="py-4 px-4 text-center">{{ player.age }}</td>
-                    <td class="py-4 px-4 text-center">{{ player.position }}</td>
-                    <td class="py-4 px-4 text-center">{{ player.country }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow-md py-4 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+        <div>
+            <a href="/">
+              <nav class="text-2xl font-bold text-green-700 mb-2 md:mb-0">FC Himalayan</nav>
+            </a>
+          </div>
+          
+      <nav class="space-x-4 text-center">
+        <a href="{% url 'index' %}" class="text-gray-700 hover:text-green-700 font-medium">Home</a>
+        <a href="{% url 'contact' %}" class="text-gray-700 hover:text-green-700 font-medium">Contact</a>
+        <a href="{% url 'standings' %}" class="text-gray-700 hover:text-green-700 font-medium">Standings</a>
+        <a href="{% url 'gallery' %}" class="text-gray-700 hover:text-green-700 font-medium">Gallery</a>
+      </nav>
     </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="text-3xl sm:text-4xl font-bold text-center text-green-800 mb-6">Registered Players</h1>
+
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-green-100 text-green-900">
+          <tr>
+            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold">Image</th>
+            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold">Name</th>
+            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold">Surname</th>
+            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold">Age</th>
+            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold">Position</th>
+            <th scope="col" class="px-4 py-3 text-left text-sm font-semibold">Country</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {% for player in players %}
+          <tr class="hover:bg-green-50">
+            <td class="px-4 py-3">
+              {% if player.image %}
+                <a href="{% url 'player_profile' player.id %}">
+                  <img src="{{ player.image.url }}" alt="Player Image" class="h-16 w-16 object-cover rounded-full border mx-auto sm:mx-0" />
+                </a>
+              {% else %}
+                <span class="text-sm text-gray-500">No Image</span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3 text-sm">{{ player.name }}</td>
+            <td class="px-4 py-3 text-sm">{{ player.surname }}</td>
+            <td class="px-4 py-3 text-sm">{{ player.age }}</td>
+            <td class="px-4 py-3 text-sm">{{ player.position }}</td>
+            <td class="px-4 py-3 text-sm">{{ player.country }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
 </body>
 </html>

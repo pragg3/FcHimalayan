@@ -257,23 +257,21 @@ def create_checkout_session(request):
                     'product_data': {
                         'name': 'Donation to FC Himalayan',
                     },
-                    'unit_amount': data['amount'],  # amount in cents
+                    'unit_amount': int(data['amount']),  # amount in cents
                 },
                 'quantity': 1,
             }],
             mode='payment',
-            success_url='https://44b6-2a01-11-810-4300-71fe-60a2-1741-24fc.ngrok-free.app/donation-success/',
-            cancel_url='https://44b6-2a01-11-810-4300-71fe-60a2-1741-24fc.ngrok-free.app/donation-cancelled/',
+            success_url='https://himalayanfc.onrender.com/donation-success/',
+            cancel_url='https://himalayanfc.onrender.com/donation-cancelled/',
         )
-        return JsonResponse({'id': session.id})
+        return JsonResponse({'sessionId': session.id})
     except Exception as e:
         logging.error(f"Stripe checkout session error: {e}")
-        return JsonResponse({'error': str(e)})
-    
+        return JsonResponse({'error': str(e)
 
-    return render(request, 'index.html', {
-        'STRIPE_PUBLISHABLE_KEY': settings.STRIPE_PUBLISHABLE_KEY,
-    })
+})
+
 
 def donation_success(request):
     return render(request, 'donation_success.html')
