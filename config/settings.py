@@ -28,13 +28,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-za$t9^!f&z_sccq6j^wc+drl9g1q*3-w%wm6g0n+ht!!uzhfb9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '44b6-2a01-11-810-4300-71fe-60a2-1741-24fc.ngrok-free.app',
-    '.onrender.com'
+    'fchimalayan.onrender.com'
 ]
 
 
@@ -86,12 +86,18 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+#DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
+
 
 
 # Password validation
@@ -155,7 +161,7 @@ AUTHENTICATION_BACKENDS = [
 load_dotenv() 
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
-DATABASES['default'] = dj_database_url.config(default='sqlite:///db.sqlite3')
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
