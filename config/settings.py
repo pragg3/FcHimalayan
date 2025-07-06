@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '44b6-2a01-11-810-4300-71fe-60a2-1741-24fc.ngrok-free.app',
-    'fchimalayan.onrender.com'
+    'himalayanfc.onrender.com'
 ]
 
 
