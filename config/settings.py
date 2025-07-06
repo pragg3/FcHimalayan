@@ -95,8 +95,8 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+#MEDIA_URL = "/media/"
+#MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default auto primary key
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
